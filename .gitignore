@@ -1,0 +1,11 @@
+.gradle/
+bin/
+build/
+
+.classpath
+.java-version
+.project
+
+*.dylib
+*.hash
+*.prefs

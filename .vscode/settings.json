@@ -1,0 +1,10 @@
+{
+    "java.home": "/Users/jluetke/.jenv/versions/11",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "java.configuration.updateBuildConfiguration": "automatic"
+}

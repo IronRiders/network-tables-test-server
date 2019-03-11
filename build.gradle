@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'distribution'
+    id 'application'
+}
+
+ext {
+    os_name = System.properties['os.name'].toLowerCase();
+    os_arch = System.getProperty("os.arch").replace('_', '-')
+
+    if (os_name.contains('mac')) {
+        os_name = 'osx'
+    }
+}
+
+application {
+    mainClassName = 'org.ironriders.nttestserver.NTTestServer'
+}
+
+dependencies {
+    //       package             :name       :version
+    compile 'edu.wpi.first.wpiutil:wpiutil-java:2019.3.1'
+    compile 'edu.wpi.first.ntcore:ntcore-java:2019.3.1'
+
+    runtime 'edu.wpi.first.ntcore:ntcore-java:2019.3.1'
+}
+
+distributions {
+    main {
+        baseName = 'nt-test-server'
+        contents {
+            from ("src/main/resources/${project.os_name}/${project.os_arch}") {
+                // OS X
+                include '*.dylib'
+                
+                into 'lib'
+            }
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "org.ironriders.nttestserver.NTTestServer"
+    }
+}
+
+repositories {
+    maven { 
+        url '/Users/jluetke/frc2019/maven'
+    }
+}
+
+task copyLibs(type: Copy) {
+    from ("src/main/resources/${project.os_name}/${project.os_arch}") {
+        // OS X
+        include '*.dylib'
+    }
+    into '.'
+}
+run.dependsOn copyLibs
